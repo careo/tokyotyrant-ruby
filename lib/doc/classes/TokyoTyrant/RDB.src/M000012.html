@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>open (TokyoTyrant::RDB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 98</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">host</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">host</span>)
+      <span class="ruby-identifier">port</span> = <span class="ruby-identifier">_argnum</span>(<span class="ruby-identifier">port</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sock</span>
+        <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EINVALID</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">port</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">info</span> = <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">gethostbyname</span>(<span class="ruby-identifier">host</span>)
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+          <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ENOHOST</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">sock</span> = <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">info</span>[<span class="ruby-value">3</span>], <span class="ruby-identifier">port</span>)
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+          <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EREFUSED</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">sock</span> = <span class="ruby-constant">UNIXSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">host</span>)
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+          <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EREFUSED</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@sock</span> = <span class="ruby-identifier">sock</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

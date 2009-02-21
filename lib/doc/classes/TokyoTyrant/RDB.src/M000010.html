@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>errmsg (TokyoTyrant::RDB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 65</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">errmsg</span>(<span class="ruby-identifier">ecode</span> = <span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">ecode</span> = <span class="ruby-ivar">@ecode</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ecode</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ESUCCESS</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;success&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EINVALID</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;invalid operation&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ENOHOST</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;host not found&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EREFUSED</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;connection refused&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ESEND</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;send error&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ERECV</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;recv error&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EKEEP</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;existing record&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ENOREC</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;no record found&quot;</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ecode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EMISC</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;miscellaneous error&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;unknown&quot;</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

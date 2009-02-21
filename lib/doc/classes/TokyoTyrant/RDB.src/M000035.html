@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>misc (TokyoTyrant::RDB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 788</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">misc</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">args</span> = [], <span class="ruby-identifier">opts</span> = <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">args</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+      <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">_argnum</span>(<span class="ruby-identifier">opts</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@sock</span>
+        <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EINVALID</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">sbuf</span> = [<span class="ruby-value">0x</span><span class="ruby-constant">C8</span>, <span class="ruby-value">0x90</span>, <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span>, <span class="ruby-identifier">opts</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;CCNNN&quot;</span>)
+      <span class="ruby-identifier">sbuf</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">arg</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">arg</span>)
+        <span class="ruby-identifier">sbuf</span> <span class="ruby-operator">+=</span> [<span class="ruby-identifier">arg</span>.<span class="ruby-identifier">length</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;N&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">arg</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">_send</span>(<span class="ruby-identifier">sbuf</span>)
+        <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ESEND</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">code</span> = <span class="ruby-identifier">_recvcode</span>
+      <span class="ruby-identifier">rnum</span> = <span class="ruby-identifier">_recvint32</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+        <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ERECV</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EMISC</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">res</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">rnum</span>
+        <span class="ruby-identifier">esiz</span> = <span class="ruby-identifier">_recvint32</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">esiz</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+          <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ERECV</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">ebuf</span> = <span class="ruby-identifier">_recv</span>(<span class="ruby-identifier">esiz</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ebuf</span>
+          <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ERECV</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">res</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">ebuf</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
