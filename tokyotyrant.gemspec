@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email = %q{mikio@users.sourceforge.net}
   s.extensions = []
   s.extra_rdoc_files = []
-  s.files = Dir["lib/*"]
+  s.files = ["lib/COPYING", "lib/doc", "lib/example", "lib/install.rb", "lib/makedoc.sh", "lib/overview.rd", "lib/package.sh", "lib/tcrtest.rb", "lib/test.rb", "lib/tokyotyrant.rb"]
   s.has_rdoc = false
   s.homepage = %q{}
   s.rdoc_options = []
