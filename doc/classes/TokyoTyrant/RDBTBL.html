@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: TokyoTyrant::RDBTBL</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">TokyoTyrant::RDBTBL</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/tokyotyrant_rb.html">
+                tokyotyrant.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="RDB.html">
+                RDB
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This class inherits the class &quot;<a
+href="RDB.html">TokyoTyrant::RDB</a>&quot;. All methods are specific to
+servers of the table database.<br/>
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000008">genuid</a>&nbsp;&nbsp;
+      <a href="#M000005">get</a>&nbsp;&nbsp;
+      <a href="#M000006">mget</a>&nbsp;&nbsp;
+      <a href="#M000004">out</a>&nbsp;&nbsp;
+      <a href="#M000001">put</a>&nbsp;&nbsp;
+      <a href="#M000003">putcat</a>&nbsp;&nbsp;
+      <a href="#M000002">putkeep</a>&nbsp;&nbsp;
+      <a href="#M000007">setindex</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ITLEXICAL</td>
+          <td>=</td>
+          <td class="context-item-value">0</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+index type: lexical string
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ITDECIMAL</td>
+          <td>=</td>
+          <td class="context-item-value">1</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+index type: decimal string
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ITOPT</td>
+          <td>=</td>
+          <td class="context-item-value">9998</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+index type: optimize
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ITVOID</td>
+          <td>=</td>
+          <td class="context-item-value">9999</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+index type: void
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ITKEEP</td>
+          <td>=</td>
+          <td class="context-item-value">1 &lt;&lt; 24</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+index type: keep existing index
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000008.html');return false;">
+          <span class="method-name">genuid</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generate a unique ID number.<br/> The return value is the new unique ID number
+or -1 on failure.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000005.html');return false;">
+          <span class="method-name">get</span><span class="method-args">(pkey)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Retrieve a record.<br/> `<em>pkey</em>' specifies the primary key.<br/> If
+successful, the return value is a hash of the columns of the corresponding
+record. `nil' is returned if no record corresponds.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000006.html');return false;">
+          <span class="method-name">mget</span><span class="method-args">(recs)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Retrieve records.<br/> `<em>recs</em>' specifies a hash containing the
+retrieval keys. As a result of this method, keys existing in the database
+have the corresponding columns and keys not existing in the database are
+removed.<br/> If successful, the return value is the number of retrieved
+records or -1 on failure.<br/> Due to the protocol restriction, this method
+can not handle records with binary columns including the &quot;\0&quot;
+chracter.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000004.html');return false;">
+          <span class="method-name">out</span><span class="method-args">(pkey)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Remove a record.<br/> `<em>pkey</em>' specifies the primary key.<br/> If
+successful, the return value is true, else, it is false.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000001.html');return false;">
+          <span class="method-name">put</span><span class="method-args">(pkey, cols)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Store a record.<br/> `<em>pkey</em>' specifies the primary key.<br/>
+`<em>cols</em>' specifies a hash containing columns.<br/> If successful,
+the return value is true, else, it is false.<br/> If a record with the same
+key exists in the database, it is overwritten.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000003.html');return false;">
+          <span class="method-name">putcat</span><span class="method-args">(pkey, cols)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Concatenate columns of the existing record.<br/> `<em>pkey</em>'
+specifies the primary key.<br/> `<em>cols</em>' specifies a hash
+containing columns.<br/> If successful, the return value is true, else, it is
+false.<br/> If there is no corresponding record, a new record is created.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000002.html');return false;">
+          <span class="method-name">putkeep</span><span class="method-args">(pkey, cols)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Store a new record.<br/> `<em>pkey</em>' specifies the primary key.<br/>
+`<em>cols</em>' specifies a hash containing columns.<br/> If successful,
+the return value is true, else, it is false.<br/> If a record with the same
+key exists in the database, this method has no effect.<br/>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="RDBTBL.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('RDBTBL.src/M000007.html');return false;">
+          <span class="method-name">setindex</span><span class="method-args">(name, type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set a column index.<br/> `<em>name</em>' specifies the name of a column.
+If the name of an existing index is specified, the index is rebuilt. An
+empty string means the primary key.<br/> `<em>type</em>' specifies the
+index type: `TokyoCabinet::RDBTBL::ITLEXICAL' for lexical string,
+`TokyoCabinet::RDBTBL::ITDECIMAL' for decimal string. If it is
+`TokyoCabinet::RDBTBL::ITOPT', the index is optimized. If it is
+`TokyoCabinet::RDBTBL::ITVOID', the index is removed. If
+`TokyoCabinet::RDBTBL::ITKEEP' is added by bitwise-or and the index
+exists, this method merely returns failure.<br/> If successful, the return
+value is true, else, it is false.<br/>
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+</div>
+
+</body>
+</html>
