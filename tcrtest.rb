@@ -863,14 +863,19 @@ def proctable(host, port, rnum)
     if rand(20) == 0
       qry.setlimit(10, rand(10))
       res = qry.searchget
-      res.each do |cols|
-        pkey = cols[""]
-        str = cols["str"]
+      res.each do |rcols|
+        pkey = rcols[""]
+        str = rcols["str"]
         if !pkey || !str || pkey != str
           eprint(rdb, "searchget")
           err = true
           break
         end
+      end
+      if(qry.searchcount != res.size)
+        eprint(rdb, "searchcount")
+        err = true
+        break
       end
       onum = rdb.rnum
       if !qry.searchout

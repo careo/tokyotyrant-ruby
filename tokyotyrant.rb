@@ -57,6 +57,7 @@ module TokyoTyrant
     # The return value is the new remote database object.%%
     def initialize()
       @ecode = ESUCCESS
+      @enc = nil
       @sock = nil
     end
     # Get the message string corresponding to an error code.%%
@@ -115,6 +116,10 @@ module TokyoTyrant
           @ecode = EREFUSED
           return false
         end
+        begin
+          sock.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, true)
+        rescue Exception
+        end
       else
         begin
           sock = UNIXSocket.open(host)
@@ -122,6 +127,9 @@ module TokyoTyrant
           @ecode = EREFUSED
           return false
         end
+      end
+      if sock.respond_to?(:set_encoding)
+        sock.set_encoding("ASCII-8BIT")
       end
       @sock = sock
       return true
@@ -337,7 +345,7 @@ module TokyoTyrant
         @ecode = ERECV
         return nil
       end
-      return vbuf
+      return _retstr(vbuf)
     end
     # Retrieve records.%%
     # `<i>recs</i>' specifies a hash containing the retrieval keys.  As a result of this method, keys existing in the database have the corresponding values and keys not existing in the database are removed.%%
@@ -388,7 +396,7 @@ module TokyoTyrant
           @ecode = ERECV
           return -1
         end
-        recs[kbuf] = vbuf
+        recs[kbuf] = _retstr(vbuf)
       end
       return rnum
     end
@@ -474,7 +482,7 @@ module TokyoTyrant
         @ecode = ERECV
         return nil
       end
-      return vbuf
+      return _retstr(vbuf)
     end
     # Get forward matching keys.%%
     # `<i>prefix</i>' specifies the prefix of the corresponding keys.%%
@@ -520,7 +528,7 @@ module TokyoTyrant
           @ecode = ERECV
           return Array.new
         end
-        keys.push(kbuf)
+        keys.push(_retstr(kbuf))
       end
       return keys
     end
@@ -626,7 +634,7 @@ module TokyoTyrant
         @ecode = ERECV
         return nil
       end
-      return vbuf
+      return _retstr(vbuf)
     end
     # Synchronize updated contents with the file and the device.%%
     # If successful, the return value is true, else, it is false.%%
@@ -778,7 +786,7 @@ module TokyoTyrant
         @ecode = ERECV
         return nil
       end
-      return sbuf
+      return _retstr(sbuf)
     end
     # Call a versatile function for miscellaneous operations.%%
     # `<i>name</i>' specifies the name of the function.  All databases support "putlist", "outlist", and "getlist".  "putlist" is to store records.  It receives keys and values one after the other, and returns an empty list.  "outlist" is to remove records.  It receives keys, and returns an empty array.  "getlist" is to retrieve records.  It receives keys, and returns keys and values of corresponding records one after the other.  Table database supports "setindex", "search", and "genuid".%%
@@ -825,7 +833,7 @@ module TokyoTyrant
           @ecode = ERECV
           return nil
         end
-        res.push(ebuf)
+        res.push(_retstr(ebuf))
       end
       return res
     end
@@ -949,15 +957,44 @@ module TokyoTyrant
     private
     # Get a string argument.%%
     def _argstr(obj)
-      return obj.to_s if obj.is_a?(Numeric)
-      return obj if obj.is_a?(String)
-      raise ArgumentError
+      case obj
+      when Numeric
+        obj = obj.to_s
+      when Symbol
+        obj = obj.to_s
+      when String
+      else
+        raise ArgumentError
+      end
+      if obj.respond_to?(:force_encoding)
+        obj = obj.dup
+        obj.force_encoding("ASCII-8BIT")
+      end
+      return obj
     end
     # Get a numeric argument.%%
     def _argnum(obj)
-      return obj.to_i if obj.is_a?(String)
-      return obj if obj.is_a?(Numeric)
-      raise ArgumentError
+      case obj
+      when String
+        obj = obj.to_i
+      when Numeric
+      else
+        raise ArgumentError
+      end
+      return obj
+    end
+    # Get a normalized string to be returned
+    def _retstr(str)
+      if str.respond_to?(:force_encoding)
+        if @enc
+          str.force_encoding(@enc)
+        elsif Encoding.default_internal
+          str.force_encoding(Encoding.default_internal)
+        else
+          str.force_encoding("UTF-8")
+        end
+      end
+      return str
     end
     # Send a series of data.%%
     def _send(buf)
@@ -1270,6 +1307,14 @@ module TokyoTyrant
         rv[i] = cols
       end
       return rv
+    end
+    # Get the count of corresponding records.%%
+    # The return value is the count of corresponding records or 0 on failure.%%
+    def searchcount()
+      args = Array.new(@args)
+      args.push("count")
+      rv = @rdb.misc("search", args, RDB::MONOULOG)
+      return rv ? rv[0].to_i : 0
     end
   end
 end

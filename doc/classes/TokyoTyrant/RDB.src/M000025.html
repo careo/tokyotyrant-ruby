@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 484</span>
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 492</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fwmkeys</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">max</span> = <span class="ruby-value">-1</span>)
       <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">prefix</span>)
       <span class="ruby-identifier">max</span> = <span class="ruby-identifier">_argnum</span>(<span class="ruby-identifier">max</span>)
@@ -50,7 +50,7 @@
           <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ERECV</span>
           <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-keyword kw">end</span>
-        <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">kbuf</span>)
+        <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">_retstr</span>(<span class="ruby-identifier">kbuf</span>))
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">keys</span>
     <span class="ruby-keyword kw">end</span></pre>

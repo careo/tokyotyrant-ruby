@@ -1,5 +1,7 @@
 #! /usr/bin/ruby
 
+require 'rbconfig'
+
 commands = [
 
             "tcrtest.rb write 127.0.0.1 10000",
@@ -11,9 +13,10 @@ commands = [
             "tcrtest.rb rcat -ext put 127.0.0.1 1000",
             "tcrtest.rb misc 127.0.0.1 1000",
            ]
+rubycmd = Config::CONFIG["bindir"] + "/" + RbConfig::CONFIG['ruby_install_name']
 num = 1
 commands.each do |command|
-  rv = system("/usr/bin/ruby #{command} >/dev/null")
+  rv = system("#{rubycmd} #{command} >/dev/null")
   if rv
     printf("%03d/%03d: %s: ok\n", num, commands.size, command)
   else

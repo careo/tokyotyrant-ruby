@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 788</span>
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 796</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">misc</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">args</span> = [], <span class="ruby-identifier">opts</span> = <span class="ruby-value">0</span>)
       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">name</span>)
       <span class="ruby-identifier">args</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
@@ -51,7 +51,7 @@
           <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">ERECV</span>
           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
         <span class="ruby-keyword kw">end</span>
-        <span class="ruby-identifier">res</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">ebuf</span>)
+        <span class="ruby-identifier">res</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">_retstr</span>(<span class="ruby-identifier">ebuf</span>))
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span>
     <span class="ruby-keyword kw">end</span></pre>

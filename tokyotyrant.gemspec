@@ -2,7 +2,7 @@ require 'rubygems'
 
 spec = Gem::Specification.new do |s|
   s.name = "tokyotyrant"
-  s.version = "1.4"
+  s.version = "1.5"
   s.author "Mikio Hirabayashi"
   s.email = "mikio@users.sourceforge.net"
   s.homepage = "http://tokyocabinet.sourceforge.net/"

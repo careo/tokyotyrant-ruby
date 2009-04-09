@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 98</span>
+  <pre><span class="ruby-comment cmt"># File tokyotyrant.rb, line 99</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-value">0</span>)
       <span class="ruby-identifier">host</span> = <span class="ruby-identifier">_argstr</span>(<span class="ruby-identifier">host</span>)
       <span class="ruby-identifier">port</span> = <span class="ruby-identifier">_argnum</span>(<span class="ruby-identifier">port</span>)
@@ -31,6 +31,10 @@
           <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EREFUSED</span>
           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
         <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">setsockopt</span>(<span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">IPPROTO_TCP</span>, <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">TCP_NODELAY</span>, <span class="ruby-keyword kw">true</span>)
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+        <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">else</span>
         <span class="ruby-keyword kw">begin</span>
           <span class="ruby-identifier">sock</span> = <span class="ruby-constant">UNIXSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">host</span>)
@@ -38,6 +42,9 @@
           <span class="ruby-ivar">@ecode</span> = <span class="ruby-constant">EREFUSED</span>
           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
         <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:set_encoding</span>)
+        <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">set_encoding</span>(<span class="ruby-value str">&quot;ASCII-8BIT&quot;</span>)
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-ivar">@sock</span> = <span class="ruby-identifier">sock</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
